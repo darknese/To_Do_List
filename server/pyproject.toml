@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "server"
+version = "0.1.0"
+description = "To_Do_List servive"
+authors = ["Daniil <darkflame6277@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.0.6"
+strawberry-graphql = "^0.119.1"
+pytest = "^7.1.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
