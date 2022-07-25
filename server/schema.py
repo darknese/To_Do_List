@@ -5,7 +5,6 @@ import strawberry_django
 from strawberry import auto
 from apps.todo import models
 import strawberry_django.auth as auth
-from strawberry_django import mutations
 from django.contrib.auth import get_user_model
 
 
