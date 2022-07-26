@@ -6,14 +6,16 @@ export default defineNuxtConfig({
     'vuetify/lib/styles/main.css',
     // 'mdi/css/materialdesignicons.min.css'
   ],
+  vite: {
+    define: {
+      'process.env.DEBUG': 'false'
+    }
+  },
   build: {
     transpile: [
       'vuetify',
       '@apollo/client',
       'ts-invariant/process',
     ]
-  },
-  plugins: [
-    '~/plugins/apollo-client'
-  ]
+  }
 })

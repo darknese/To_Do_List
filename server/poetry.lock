@@ -95,6 +95,17 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-cors-headers"
+version = "3.13.0"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "express"
 version = "0.1.5"
 description = "Safely process expressions and templates based on user input."
@@ -364,7 +375,7 @@ test = ["pytest-mock (>=3.3)", "pytest (>=4.3)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "368104786269c45843c6038dd93968641901c7ed84f29fe78b1d32dfc1591992"
+content-hash = "62ba3fade5f62c3b620e367539aa9c09df09f436958c2a489541dcf2deee3d97"
 
 [metadata.files]
 asgiref = []
@@ -375,6 +386,7 @@ click = []
 colorama = []
 dateparser = []
 django = []
+django-cors-headers = []
 express = []
 graphql-core = []
 iniconfig = []

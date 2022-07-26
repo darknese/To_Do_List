@@ -1,12 +1,15 @@
 import { defineNuxtPlugin } from "#app"
-import { ApolloClient, InMemoryCache } from "@apollo/client/core"
+import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client/core"
 import { DefaultApolloClient } from "@vue/apollo-composable"
 
+console.log(process.env.API_ENDPOINT)
+
 export default defineNuxtPlugin((nuxtApp) => {
-  console.log('hell')
   const apolloClient = new ApolloClient({
     cache: new InMemoryCache(),
-    uri: process.env.API_ENDPOINT
+    link: createHttpLink({
+      uri: process.env.API_ENDPOINT
+    })
     //other configuration //
   })
   nuxtApp.vueApp.provide(DefaultApolloClient, apolloClient)

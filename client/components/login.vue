@@ -1,35 +1,31 @@
 <script lang="ts" setup>
-import { ref, unref } from "#imports"
-import ggl from 'graphql-tag'
-import axios from 'axios'
-import {useQuery} from "@vue/apollo-composable";
+import { ref } from "#imports"
+import gql from 'graphql-tag'
+import { useQuery} from "@vue/apollo-composable"
 
 const username = ref<string>('')
 const password = ref<string>('')
 const email = ref<string>('')
 
 
-const { result:user } = useQuery(ggl`
-  query { user {
-    username
-  }}
+const { result: user } = useQuery(gql`
+  query {
+    user {
+      username
+    }
+  }
 `)
-
-
 </script>
+
 <template lang="pug">
 v-card
   v-card-title.text-center Вход
-  v-card
-    v-text-field(v-model="username" label="Username")
+  v-card-text
     pre {{ user }}
+    v-text-field(v-model="username" label="Username")
     v-text-field(v-model="password" label="Password")
-  v-row
-    v-col
-      v-card-actions
-        v-btn Register
-    v-col.text-right
-      v-card-actions
-        v-btn Login
-
+  v-card-actions
+     v-btn(color="primary") Register
+     v-spacer
+     v-btn(color="primary") Login
 </template>

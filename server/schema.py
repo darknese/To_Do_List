@@ -14,4 +14,4 @@ class Query:
     todo: ToDo = strawberry_django.field()
 
 
-schema = strawberry.Schema(query=Query, mutation=Mutation)
+schema = strawberry.Schema(query=Query)
