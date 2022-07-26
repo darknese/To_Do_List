@@ -8,3 +8,4 @@ client/.env
 client/dist
 .idea
 server/venv
+server/db.sqlite3
