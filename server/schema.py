@@ -12,6 +12,7 @@ from mutations import Mutation
 class Query:
     user: typing.List[User] = strawberry_django.field()
     todo: ToDo = strawberry_django.field()
+    alltodo: typing.List[ToDo] = strawberry_django.field()
 
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)

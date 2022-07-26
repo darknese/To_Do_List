@@ -2,7 +2,7 @@
 import { ref, unref } from "#imports"
 import ggl from 'graphql-tag'
 import axios from 'axios'
-import {useQuery} from "@vue/apollo-composable";
+import { useQuery } from '@vue/apollo-composable'
 
 const username = ref<string>('')
 const password = ref<string>('')
