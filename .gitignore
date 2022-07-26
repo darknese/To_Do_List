@@ -7,3 +7,4 @@ client/.output
 client/.env
 client/dist
 .idea
+server/venv

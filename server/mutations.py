@@ -1,4 +1,5 @@
-from typing import Optional
+import typing
+from typing import Optional, List
 import strawberry
 import strawberry_django
 from strawberry import auto
@@ -11,9 +12,11 @@ from typing import List
 @strawberry.type()
 class Mutation:
     createToDo: ToDo = mutations.create(ToDoInput)
-    updateToDo: ToDo = mutations.update(ToDoPartialInput)
-    deleteToDo: ToDo = mutations.delete()
+    updateToDo: typing.List[ToDo] = mutations.update(ToDoPartialInput)
+    deleteToDo: typing.List[ToDo] = mutations.delete()
 
     login: Optional[User] = auth.login()
     logout = auth.logout()
     register: User = auth.register(UserInput)
+
+
