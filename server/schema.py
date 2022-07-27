@@ -15,4 +15,4 @@ class Query:
     alltodo: typing.List[ToDo] = strawberry_django.field()
 
 
-schema = strawberry.Schema(query=Query)
+schema = strawberry.Schema(query=Query, mutation=Mutation)

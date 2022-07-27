@@ -2,11 +2,9 @@ import typing
 from typing import Optional, List
 import strawberry
 import strawberry_django
-from strawberry import auto
 import strawberry_django.auth as auth
 from strawberry_django import mutations
 from type import User, UserInput, ToDo, ToDoInput, ToDoPartialInput
-from typing import List
 
 
 @strawberry.type()
