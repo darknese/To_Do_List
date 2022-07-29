@@ -1,44 +1,43 @@
 <script lang="ts" setup>
-import { ref } from "#imports"
-import gql from 'graphql-tag'
-import { useQuery, useMutation } from "@vue/apollo-composable"
-import { defineEmits } from 'vue-demi';
+import { ref } from "#imports";
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@vue/apollo-composable";
+import { defineEmits } from "vue-demi";
 
-const username = ref<string>('')
-const password = ref<string>('')
-const email = ref<string>('')
-
-
-const { result: user } = useQuery(gql`
-    query {
-        user{
-            username
-        }
-    }
-`)
+const username = ref<string>("");
+const password = ref<string>("");
+const email = ref<string>("");
 
 const { mutate: login } = useMutation(gql`
-  mutation Login($username: String, $password: String){
-    login(username: $username password: $password){
+  mutation Login($username: String, $password: String) {
+    login(username: $username, password: $password) {
       username
     }
-   }
-`)
+  }
+`);
+
+const { result: todos } = useQuery(gql`
+  query {
+    alltodo {
+      id
+      field
+      title
+    }
+  }
+`);
 
 const logining = () => {
-  login({username: username.value, password: password.value})
-}
-
+  login({ username: username.value, password: password.value });
+};
 </script>
 
 <template lang="pug">
 v-row
-  pre {{ user }}
   v-col
   v-col
-    v-card(class="card")
+    v-card
       v-card-title.text-center Вход
-
+      pre {{ todos }}
       v-card-text
         v-text-field(v-model="username" label="Username")
         v-text-field(v-model="password" label="Password")
@@ -49,9 +48,3 @@ v-row
   v-col
 </template>
 
-<style>
-.card{
-  margin-top: 50px;
-  width: 500px;
-}
-</style>

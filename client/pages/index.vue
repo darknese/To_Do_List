@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import Login from "~/components/login.vue"
-import Register from '~/components/register.vue'
-import TodoList from '~/components/todolist.vue';
-import { ref } from "#imports"
+import Login from "~/components/login.vue";
+import Register from "~/components/register.vue";
+import Todolist from "~/components/todolist.vue";
+import { ref } from "#imports";
 
-const reg = ref<boolean>(false)
-const log = ref<boolean>(false)
+const reg = ref<boolean>(false);
+const log = ref<boolean>(true);
 </script>
-
 
 <template lang="pug">
 v-container
@@ -20,4 +19,3 @@ v-container
     v-col
       todolist
 </template>
-
