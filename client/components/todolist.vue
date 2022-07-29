@@ -21,39 +21,18 @@ const menu = ref<[boolean]>([false])
 
 <template lang="pug">
 div
-  pre {{ todos }}
-  pre {{ tab }}
-  pre {{ tab1 }}
-  pre {{ loading }}
   v-card(v-if="!loading")
     v-toolbar(color="primary" )
-
       v-toolbar-title ToDoList
+      v-btn(@click =" $emit('add')") Создать
     div(class="d-flex flex-row")
       v-tabs(v-model="tab" direction="vertical" color="primary" )
         v-tab(v-for="todo in todos.alltodo" :value="todo.id") {{ todo.title }}
-      v-window(v-model="tab")
+      v-window(v-model="tab" flex)
         v-window-item(v-for="todo in todos.alltodo" :value="todo.id")
-          v-card
-            v-card-text
+          v-card(flex)
+            v-card-text(flex)
               p {{todo.field}}
-
-  v-card(v-if="!loading")
-    v-toolbar(color="primary" )
-      v-toolbar-title ToDo
-    div(class="d-flex flex-row")
-      v-tabs(v-model="tab1" direction="vertical" color="primary")
-        v-tab(value="option-1") Option 1
-        v-tab(value="option-2") Option 2
-      v-window(v-model="tab1")
-        v-window-item(value="option-1")
-          v-card(flat)
-            v-card-text
-              p Sed aliquam ultrices mauris. Donec posuere vulputate arcu. Morbi ac felis. Etiam feugiat lorem non metus. Sed a libero.
-        v-window-item(value="option-2")
-          v-card(flat)
-            v-card-text
-              p Sdsfaadsfadsfa lkdajgl afdkl aqldfkjg adlfkj adfj
 
 </template>
 
