@@ -26,8 +26,8 @@ const { result: todos } = useQuery(gql`
   }
 `);
 
-const logining = () => {
-  login({ username: username.value, password: password.value });
+const logining = async () => {
+  const a = await login({ username: username.value, password: password.value });
 };
 </script>
 
