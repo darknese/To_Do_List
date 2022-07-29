@@ -11,6 +11,9 @@ export default defineNuxtConfig({
       "process.env.DEBUG": "false",
     },
   },
+  publicRuntimeConfig: {
+    API_ENDPOINT: process.env.API_ENDPOINT
+  },
   build: {
     transpile: ["vuetify", "@apollo/client", "ts-invariant/process"],
   },
