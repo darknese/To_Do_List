@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useQuery } from "@vue/apollo-composable"
+import {useMutation, useQuery} from "@vue/apollo-composable"
 import gql from "graphql-tag"
 import { ref } from "#imports"
 
@@ -10,6 +10,13 @@ const { result: todos, loading } = useQuery(gql`
       id
       field
       title
+    }
+  }
+`)
+const {mutate: Del} = useMutation(gql`
+  mutation delToDo($id: ID!){
+    deleteToDo(filters: {id: {inList: [$id]}}){
+        id
     }
   }
 `)
@@ -28,11 +35,19 @@ div
     div(class="d-flex flex-row")
       v-tabs(v-model="tab" direction="vertical" color="primary" )
         v-tab(v-for="todo in todos.alltodo" :value="todo.id") {{ todo.title }}
-      v-window(v-model="tab" flex)
+      v-window(v-model="tab")
         v-window-item(v-for="todo in todos.alltodo" :value="todo.id")
-          v-card(flex)
-            v-card-text(flex)
+          v-card(class="Vue_todo_field")
+            v-card-text
               p {{todo.field}}
+              p.ma-10.ma-lg-5
+                v-row.justify-end
+                  v-btn(@click="$emit('edi', todo.id )") Edit
+                  v-btn(@click="Del({id: todo.id})") Delete
 
 </template>
+<style>
+.Vue_todo_field{
+}
+</style>
 

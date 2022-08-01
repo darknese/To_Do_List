@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import {computed, ref} from "#imports";
-import {useMutation} from "@vue/apollo-composable";
+import {useMutation, useQuery} from "@vue/apollo-composable";
 import gql from "graphql-tag";
 
-const title = ref<string>(" ")
+const title = ref<string>("title")
 const field = ref<string>(" ")
 
 const { mutate: add } = useMutation(gql`
@@ -15,6 +15,14 @@ const { mutate: add } = useMutation(gql`
   }
 `)
 
+const { result: todo } = useQuery(gql`
+    query($id:ID){
+        todo(pk:$id)
+    }
+`)
+const props = defineProps({
+  id: String
+})
 const create = () =>{
     console.log(title.value)
     //add({title: title, field: field})
@@ -27,11 +35,10 @@ div
     v-col
       v-card(class="card_add")
         v-toolbar(color="primary" )
-          v-toolbar-title Создание задачи
-          v-btn(@click =" $emit('add')") Вернуться к задачам
-        v-text-field(v-model="title" label="Название" single-line)
-        pre {{ title }}
-        pre {{ field }}
+          v-toolbar-title Edit todo
+          v-btn(@click =" $emit('edi')") Вернуться к задачам
+        v-text-field(v-model="title" label="hell" single-line)
+        pre {{ id }}
         v-textarea(v-model="field" label="Описание" single-line)
         v-row
           v-col
@@ -39,7 +46,7 @@ div
           v-col
           v-col
           v-col
-            v-btn(@click="add({title: title, field: field})" color="success") Создать
+            v-btn(@click="add({title: title, field: field})" color="success") Изменить
     v-col
 </template>
 
