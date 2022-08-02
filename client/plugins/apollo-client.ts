@@ -7,7 +7,7 @@ import {
 import { DefaultApolloClient } from "@vue/apollo-composable";
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const config = useRuntimeConfig()
+  const config = useRuntimeConfig();
   const apolloClient = new ApolloClient({
     cache: new InMemoryCache(),
     link: createHttpLink({

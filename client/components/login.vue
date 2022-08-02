@@ -12,19 +12,11 @@ const { mutate: login } = useMutation(gql`
   mutation Login($username: String, $password: String) {
     login(username: $username, password: $password) {
       username
+
     }
   }
 `);
 
-const { result: todos } = useQuery(gql`
-  query {
-    alltodo {
-      id
-      field
-      title
-    }
-  }
-`);
 
 const logining = async () => {
   const a = await login({ username: username.value, password: password.value });
@@ -37,7 +29,6 @@ v-row
   v-col
     v-card
       v-card-title.text-center Вход
-      pre {{ todos }}
       v-card-text
         v-text-field(v-model="username" label="Username")
         v-text-field(v-model="password" label="Password")
@@ -47,4 +38,3 @@ v-row
          v-btn(color="primary" @click="logining") Login
   v-col
 </template>
-

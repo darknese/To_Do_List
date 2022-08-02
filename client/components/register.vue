@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from "#imports"
+import { ref } from "#imports";
 import gql from "graphql-tag";
 import { useQuery } from "@vue/apollo-composable";
 
@@ -24,4 +24,3 @@ v-row
          v-btn(color="primary") Register
   v-col
 </template>
-

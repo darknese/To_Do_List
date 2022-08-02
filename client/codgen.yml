@@ -1,0 +1,8 @@
+overwrite: true
+schema: http://localhost:8000/graphql
+generates:
+  ./client/schema.graphql:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-vue-apollo-smart-ops

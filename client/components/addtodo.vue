@@ -1,24 +1,45 @@
 <script lang="ts" setup>
-import {computed, ref} from "#imports";
-import {useMutation} from "@vue/apollo-composable";
+import { computed, ref } from "#imports";
+import { useMutation } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 
-const title = ref<string>(" ")
-const field = ref<string>(" ")
+const title = ref<string>(" ");
+const field = ref<string>(" ");
 
-const { mutate: add } = useMutation(gql`
-  mutation createtodo($title: String!, $field: String!){
-    createToDo(data: {title: $title, field: $field}){
-        id
-        title
+const ALLTODO = gql`
+  query alltodo {
+    alltodo {
+      id
+      field
+      title
     }
   }
-`)
+`;
 
-const create = () =>{
-    console.log(title.value)
-    //add({title: title, field: field})
-}
+const { mutate: add } = useMutation(
+  gql`
+    mutation createToDo($title: String!, $field: String!) {
+      createToDo(data: { title: $title, field: $field }) {
+        id
+        title
+        field
+      }
+    }
+  `,
+  () => ({
+    variables: {
+      title: title.value,
+      field: field.value,
+    },
+    update: (cache, { data: { createToDo } }) => {
+      let data = cache.readQuery<any>({ query: ALLTODO });
+      data = {
+        alltodo: [...data.alltodo, add],
+      };
+      cache.writeQuery({ query: ALLTODO, data });
+    },
+  })
+);
 </script>
 <template lang="pug">
 div
@@ -30,8 +51,6 @@ div
           v-toolbar-title Создание задачи
           v-btn(@click =" $emit('add')") Вернуться к задачам
         v-text-field(v-model="title" label="Название" single-line)
-        pre {{ title }}
-        pre {{ field }}
         v-textarea(v-model="field" label="Описание" single-line)
         v-row
           v-col
@@ -39,12 +58,12 @@ div
           v-col
           v-col
           v-col
-            v-btn(@click="add({title: title, field: field})" color="success") Создать
+            v-btn(@click="add(), $emit('add')" color="success") Создать
     v-col
 </template>
 
 <style>
-.card_add{
+.card_add {
   max-width: 700px;
   variant: outlined;
 }
