@@ -15,6 +15,8 @@ const ALLTODO = gql`
   }
 `;
 
+const { result: todos, loading } = useQuery(ALLTODO);
+
 const { mutate: Del } = useMutation(
   gql`
     mutation deleteToDo($id: ID!) {
@@ -37,37 +39,33 @@ const { mutate: Del } = useMutation(
   })
 );
 
-const props = defineProps<{
-  todos: object;
-}>();
-
-const emit = defineEmits<{
-  (e: "edit", id: string): void;
-  (e: "add"): void;
-}>();
 
 const tab = ref<string>("1");
-const tab1 = ref<string>("option-1");
-const menu = ref<[boolean]>([false]);
 </script>
 
 <template lang="pug">
-div
+div(if="!loading")
   v-card
     v-toolbar(color="primary" )
       v-toolbar-title ToDoList
-      v-btn(@click =" emit('add')") Создать
+      v-btn(@click ="") Создать
     div(class="d-flex flex-row")
+      pre {{todos}}
       v-tabs(v-model="tab" direction="vertical" color="primary" )
-        v-tab(v-for="todo in todos" :value="todo.id") {{ todo.title }}
+        v-tab(v-for="todo in todos.alltodo" :value="todo.id") {{ todo.title }}
+        //v-tab.text-center(value="add") +
       v-window(v-model="tab")
-        v-window-item(v-for="todo in todos" :value="todo.id")
-          v-card(class="Vue_todo_field")
+        v-window-item(v-for="todo in todos.alltodo" :value="todo.id")
+          v-card
             v-card-text
               p {{todo.field}}
               p.ma-10.ma-lg-5
                 v-row.justify-end
-                  v-btn(@click="emit('edit', todo.id)") Edit
+                  v-btn(@click="") Edit
                   v-btn(@click="Del({id: todo.id})") Delete
+        //v-window-item(value="add")
+        //v-card
+        //  v-card-text
+        //    p addddd
 
 </template>

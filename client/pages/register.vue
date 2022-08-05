@@ -19,7 +19,7 @@ v-row
         v-text-field(v-model="password" label="Password")
         v-text-field(v-model="email" label="Email" )
       v-card-actions
-         v-btn(color="primary" @click="$emit('back')") GoBack
+         v-btn(color="primary" to="/login") GoBack
          v-spacer
          v-btn(color="primary") Register
   v-col
