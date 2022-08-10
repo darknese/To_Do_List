@@ -1,3 +1,5 @@
+from typing import List
+
 from django.contrib.auth import get_user_model
 import strawberry
 import strawberry_django
@@ -13,6 +15,15 @@ class ToDoFilter:
     id: auto
     title: auto
     field: auto
+    creator: "UserFilter"
+
+
+@strawberry_django.filters.filter(get_user_model(), lookups=True)
+class UserFilter:
+    id: auto
+    username: auto
+    email: auto
+    todos: ToDoFilter
 
 
 # types
@@ -23,12 +34,15 @@ class ToDo:
     id: auto
     title: auto
     field: auto
+    creator: "User"
 
 
 @strawberry_django.type(get_user_model())
 class User:
+    id: auto
     username: auto
     email: auto
+    todos: List[ToDo]
 
 
 # input types
@@ -39,6 +53,7 @@ class ToDoInput:
     id: auto
     title: auto
     field: auto
+    creator: auto
 
 
 @strawberry_django.input(get_user_model())
