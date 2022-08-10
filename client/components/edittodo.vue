@@ -3,7 +3,7 @@ import { computed, ref, toRef } from "#imports";
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 
-export type ToDo = {
+type ToDo = {
   id: string;
   title: string;
   field: string;
@@ -21,7 +21,7 @@ const { mutate: edit } = useMutation(gql`
     updateToDo(
       filters: { id: { inList: [$id] } }
       data: { title: $title, field: $field }
-    ) {
+    ){
       id
       title
       field
@@ -35,29 +35,10 @@ const create = () => {
 };
 </script>
 <template lang="pug">
-div
-  v-row
-    v-col
-    v-col
-      v-card(class="card_add")
-        v-toolbar(color="primary" )
-          v-toolbar-title Edit todo
-          v-btn(@click =" $emit('edi')") Вернуться к задачам
-        v-text-field(v-model="title" single-line)
-        v-textarea(v-model="field" single-line)
-        v-row
-          v-col
-          v-col
-          v-col
-          v-col
-          v-col
-            v-btn(@click="edit({id:todo.id, title: title, field: field}), $emit('edi')" color="success") Изменить
-    v-col
+v-card
+  v-text-field(v-model="title" label="Название" single-line)
+  v-textarea(v-model="field" label="Описание" single-line)
+  v-btn(@click="$emit('edi')" color="error") Не сохранять
+  v-btn(@click="edit({id:todo.id, title: title, field: field}), $emit('edi') " color="success") Сохранить
 </template>
 
-<style>
-.card_add {
-  max-width: 700px;
-  variant: outlined;
-}
-</style>

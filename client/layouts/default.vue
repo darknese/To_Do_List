@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
+import {useRouter} from "#app";
+import {useUserStore} from "~/stores/userstore";
+const router = useRouter()
 
+const store = useUserStore()
 </script>
 
 <template lang="pug">
@@ -9,13 +13,8 @@ v-app
   v-app-bar(app)
     pre ToDoList
     v-spacer
-    NuxtLink(to="/login") login
+    v-btn(color="success" @click="router.push('/login'), store.logout()") Сменить пользователя
   v-main
     slot
 </template>
 
-<style>
-.button {
-  margin-left: 1050px;
-}
-</style>

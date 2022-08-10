@@ -17,4 +17,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify", "@apollo/client", "ts-invariant/process"],
   },
+  buildModules: [
+    '@pinia/nuxt',
+  ]
 });

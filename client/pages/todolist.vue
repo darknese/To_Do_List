@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
-import { ref } from "#imports";
+import {computed, ref} from "#imports";
+import Addtodo from "~/components/addtodo.vue";
+import Edittodo from "~/components/edittodo.vue";
+import {useUserStore} from "~/stores/userstore";
 
 // const todos = ref<any>({})
 
@@ -15,7 +18,9 @@ const ALLTODO = gql`
   }
 `;
 
-const { result: todos, loading } = useQuery(ALLTODO);
+const { result: todosData, loading } = useQuery(ALLTODO);
+const todos = computed(() => todosData.value?.alltodo ?? [] )
+const flagEdit = ref<boolean>(false)
 
 const { mutate: Del } = useMutation(
   gql`
@@ -39,33 +44,30 @@ const { mutate: Del } = useMutation(
   })
 );
 
-
-const tab = ref<string>("1");
+const store = useUserStore()
+const tab = ref<string>("1")
 </script>
 
 <template lang="pug">
-div(if="!loading")
+div(if="todos")
   v-card
-    v-toolbar(color="primary" )
+    v-toolbar(color="primary")
       v-toolbar-title ToDoList
-      v-btn(@click ="") Создать
+      pre {{ store.name }}
     div(class="d-flex flex-row")
-      pre {{todos}}
       v-tabs(v-model="tab" direction="vertical" color="primary" )
-        v-tab(v-for="todo in todos.alltodo" :value="todo.id") {{ todo.title }}
-        //v-tab.text-center(value="add") +
+        v-tab(v-for="todo in todos" :value="todo.id") {{ todo.title }}
+        v-tab.text-center(value="add") +
       v-window(v-model="tab")
-        v-window-item(v-for="todo in todos.alltodo" :value="todo.id")
-          v-card
-            v-card-text
-              p {{todo.field}}
-              p.ma-10.ma-lg-5
-                v-row.justify-end
-                  v-btn(@click="") Edit
-                  v-btn(@click="Del({id: todo.id})") Delete
-        //v-window-item(value="add")
-        //v-card
-        //  v-card-text
-        //    p addddd
-
+        v-window-item(v-for="todo in todos" :value="todo.id")
+          p(v-if="!flagEdit")
+            p {{todo.field}}
+            p.ma-10.ma-lg-5
+              v-btn(@click="flagEdit = true") Изменить
+              v-spacer
+              v-btn.justify-end(@click="Del({id: todo.id})") Удалить
+          p(v-if="flagEdit" )
+            edittodo(:todo="todo" @edi="flagEdit = false")
+        v-window-item(value="add")
+          addtodo
 </template>

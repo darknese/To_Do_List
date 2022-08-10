@@ -3,8 +3,8 @@ import { computed, ref } from "#imports";
 import { useMutation } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 
-const title = ref<string>(" ");
-const field = ref<string>(" ");
+const title = ref<string>("");
+const field = ref<string>("");
 
 const ALLTODO = gql`
   query alltodo {
@@ -40,31 +40,16 @@ const { mutate: add } = useMutation(
     },
   })
 );
+const createtodo = () => {
+  add()
+  title.value = ""
+  field.value = ""
+}
 </script>
 <template lang="pug">
-div
-  v-row
-    v-col
-    v-col
-      v-card(class="card_add")
-        v-toolbar(color="primary" )
-          v-toolbar-title Создание задачи
-          v-btn(@click =" $emit('add')") Вернуться к задачам
-        v-text-field(v-model="title" label="Название" single-line)
-        v-textarea(v-model="field" label="Описание" single-line)
-        v-row
-          v-col
-          v-col
-          v-col
-          v-col
-          v-col
-            v-btn(@click="add(), $emit('add')" color="success") Создать
-    v-col
+v-card
+  v-text-field(v-model="title" label="Название" single-line)
+  v-textarea(v-model="field" label="Описание" single-line)
+  v-btn(@click="createtodo" color="success") Создать
 </template>
 
-<style>
-.card_add {
-  max-width: 700px;
-  variant: outlined;
-}
-</style>

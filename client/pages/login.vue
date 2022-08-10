@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import { useMutation } from "@vue/apollo-composable";
 import {hasProtocol} from "ufo";
 import {useRoute, useRouter} from "#app";
+import {useUserStore} from "~/stores/userstore";
 
 const username = ref<string>("");
 const password = ref<string>("");
@@ -28,9 +29,12 @@ const logining =  async () => {
   }
   else {
     n.value=false
+    store.login(username.value)
     router.push('/todolist')
   }
 };
+
+const store = useUserStore()
 </script>
 
 <template lang="pug">
@@ -39,7 +43,7 @@ v-row
   v-col
     v-card
       v-card-title.text-center Вход
-      pre {{ n }}
+      pre {{ store.name }}
       v-card-text
         v-text-field(v-model="username" label="Username")
         v-text-field(v-model="password" label="Password")
