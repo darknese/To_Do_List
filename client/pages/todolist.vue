@@ -5,20 +5,22 @@ import {computed, ref} from "#imports";
 import Addtodo from "~/components/addtodo.vue";
 import Edittodo from "~/components/edittodo.vue";
 import {useUserStore} from "~/stores/userstore";
+import {options} from "kolorist";
 
 // const todos = ref<any>({})
+const store = useUserStore()
 
 const ALLTODO = gql`
-  query alltodo {
-    alltodo {
+  query alltodo($id: ID!) {
+    alltodo(filters: {creator: {id: {inList: [$id]}}}){
       id
-      field
       title
+      field
     }
   }
 `;
 
-const { result: todosData, loading } = useQuery(ALLTODO);
+const { result: todosData, loading } = useQuery(ALLTODO, {id:store.id})
 const todos = computed(() => todosData.value?.alltodo ?? [] )
 const flagEdit = ref<boolean>(false)
 
@@ -34,17 +36,17 @@ const { mutate: Del } = useMutation(
   `,
   () => ({
     update: (cache, { data: { deleteToDo } }) => {
-      let data = cache.readQuery<any>({ query: ALLTODO });
-      console.log(deleteToDo);
+      let data = cache.readQuery<any>({ query: ALLTODO, variables:{id:store.id} });
+      console.log(data);
       data = {
         alltodo: data.alltodo.filter((todo) => todo.id != deleteToDo[0].id),
       };
-      cache.writeQuery({ query: ALLTODO, data });
+      cache.writeQuery({ query: ALLTODO, variables:{id:store.id}, data });
     },
   })
 );
 
-const store = useUserStore()
+
 const tab = ref<string>("1")
 </script>
 

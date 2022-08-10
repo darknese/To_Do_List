@@ -4,18 +4,21 @@ import {param} from "change-case";
 export const useUserStore = defineStore("UserStore", {
   state: () => ({
     name: '',
+    id: '',
     isActive: false
   }),
   actions:{
     logout(){
       this.$patch({
         name: '',
+        id: '',
         isActive: false
       })
     },
-    login(user) {
+    login(name, id) {
       this.$patch({
-        name: user,
+        name: name,
+        id: id,
         isActive: true
       })
     }

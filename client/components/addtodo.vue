@@ -2,24 +2,26 @@
 import { computed, ref } from "#imports";
 import { useMutation } from "@vue/apollo-composable";
 import gql from "graphql-tag";
+import {useUserStore} from "~/stores/userstore";
 
 const title = ref<string>("");
 const field = ref<string>("");
+const store = useUserStore()
 
 const ALLTODO = gql`
-  query alltodo {
-    alltodo {
+  query alltodo($id: ID!) {
+    alltodo(filters: {creator: {id: {inList: [$id]}}}){
       id
-      field
       title
+      field
     }
   }
 `;
 
 const { mutate: add } = useMutation(
   gql`
-    mutation createToDo($title: String!, $field: String!) {
-      createToDo(data: { title: $title, field: $field }) {
+    mutation createToDo($title: String!, $field: String!, $creator_id: ID!) {
+      createToDo(data: { title: $title, field: $field, creator: {set: $creator_id}}) {
         id
         title
         field
@@ -30,13 +32,14 @@ const { mutate: add } = useMutation(
     variables: {
       title: title.value,
       field: field.value,
+      creator_id: store.id
     },
     update: (cache, { data: { createToDo } }) => {
-      let data = cache.readQuery<any>({ query: ALLTODO });
+      let data = cache.readQuery<any>({ query: ALLTODO, variables:{id:store.id} });
       data = {
         alltodo: [...data.alltodo, add],
       };
-      cache.writeQuery({ query: ALLTODO, data });
+      cache.writeQuery({ query: ALLTODO, variables:{id:store.id}, data });
     },
   })
 );

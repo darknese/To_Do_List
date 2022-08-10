@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import { useMutation, useQuery } from "@vue/apollo-composable";
-import gql from "graphql-tag";
 import {useRouter} from "#app";
 import {useUserStore} from "~/stores/userstore";
-const router = useRouter()
 
+
+const router = useRouter()
 const store = useUserStore()
+
+
 </script>
 
 <template lang="pug">

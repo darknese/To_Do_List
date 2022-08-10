@@ -16,6 +16,7 @@ const { mutate: login } = useMutation(gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       username
+      id
     }
   }
 `);
@@ -29,7 +30,7 @@ const logining =  async () => {
   }
   else {
     n.value=false
-    store.login(username.value)
+    store.login(user.data.login.username, user.data.login.id)
     router.push('/todolist')
   }
 };
@@ -43,7 +44,6 @@ v-row
   v-col
     v-card
       v-card-title.text-center Вход
-      pre {{ store.name }}
       v-card-text
         v-text-field(v-model="username" label="Username")
         v-text-field(v-model="password" label="Password")
