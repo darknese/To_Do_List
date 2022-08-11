@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, ref, toRef } from "#imports";
-import { useMutation, useQuery } from "@vue/apollo-composable";
-import gql from "graphql-tag";
+import { ref } from "#imports";
+import { useMutation } from "@vue/apollo-composable";
+import Update from "~/gql/todo/mutations/update.graphql";
 
 type ToDo = {
   id: string;
@@ -16,23 +16,7 @@ const props = defineProps<{
 const title = ref<string>(props.todo.title);
 const field = ref<string>(props.todo.field);
 
-const { mutate: edit } = useMutation(gql`
-  mutation update($title: String!, $field: String!, $id: ID!) {
-    updateToDo(
-      filters: { id: { inList: [$id] } }
-      data: { title: $title, field: $field }
-    ){
-      id
-      title
-      field
-    }
-  }
-`);
-
-const create = () => {
-  console.log(title.value);
-  //add({title: title, field: field})
-};
+const { mutate: edit } = useMutation(Update);
 </script>
 <template lang="pug">
 v-card
@@ -41,4 +25,3 @@ v-card
   v-btn(@click="$emit('edi')" color="error") Не сохранять
   v-btn(@click="edit({id:todo.id, title: title, field: field}), $emit('edi') " color="success") Сохранить
 </template>
-

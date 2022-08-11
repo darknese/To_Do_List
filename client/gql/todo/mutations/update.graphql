@@ -1,0 +1,10 @@
+mutation Update($title: String!, $field: String!, $id: ID!) {
+    updateToDo(
+      filters: { id: { inList: [$id] } }
+      data: { title: $title, field: $field }
+    ){
+      id
+      title
+      field
+    }
+  }

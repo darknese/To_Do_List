@@ -1,12 +1,9 @@
 <script lang="ts" setup>
-import {useRouter} from "#app";
-import {useUserStore} from "~/stores/userstore";
+import { useRouter } from "#app";
+import { useUserStore } from "~/stores/userstore";
 
-
-const router = useRouter()
-const store = useUserStore()
-
-
+const router = useRouter();
+const store = useUserStore();
 </script>
 
 <template lang="pug">
@@ -18,4 +15,3 @@ v-app
   v-main
     slot
 </template>
-

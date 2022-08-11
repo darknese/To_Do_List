@@ -1,42 +1,33 @@
 <script lang="ts" setup>
 import { ref } from "#imports";
 import { useMutation } from "@vue/apollo-composable";
-import {useRouter} from "#app";
-import {useUserStore} from "~/stores/userstore";
-import Login from "../gql/users/login.graphql"
-import gql from "graphql-tag";
+import { useRouter } from "#app";
+import { useUserStore } from "~/stores/userstore";
+import Login from "../gql/users/login.graphql";
 
 const username = ref<string>("");
 const password = ref<string>("");
 const email = ref<string>("");
-const n = ref<boolean>(false)
-const router = useRouter()
+const n = ref<boolean>(false);
+const router = useRouter();
 
-const log = gql`
-  mutation Login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      username
-      id
-    }
-  }`
+const { mutate: login } = useMutation(Login);
 
-
-const { mutate: login } = useMutation(Login)
-
-
-const logining =  async () => {
-  const user = await login({ username: username.value, password: password.value });
-  if (user.data.login == null){
-    n.value=true
-  }
-  else {
-    n.value=false
-    store.login(user.data.login.username, user.data.login.id)
-    router.push('/todolist')
+const logining = async () => {
+  const user = await login({
+    username: username.value,
+    password: password.value,
+  });
+  if (user.data.login == null) {
+    n.value = true;
+  } else {
+    n.value = false;
+    store.login(user.data.login.username, user.data.login.id);
+    router.push("/todolist");
   }
 };
 
-const store = useUserStore()
+const store = useUserStore();
 </script>
 
 <template lang="pug">

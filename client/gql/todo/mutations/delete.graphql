@@ -1,0 +1,7 @@
+mutation DeleteToDo($id: ID!) {
+  deleteToDo(filters: { id: { inList: [$id] } }) {
+    id
+    title
+    field
+  }
+}

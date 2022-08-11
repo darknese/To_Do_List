@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from "nuxt";
+import graphql from "@rollup/plugin-graphql";
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -10,6 +11,7 @@ export default defineNuxtConfig({
     define: {
       "process.env.DEBUG": "false",
     },
+    plugins: [graphql()],
   },
   publicRuntimeConfig: {
     API_ENDPOINT: process.env.API_ENDPOINT,
@@ -17,21 +19,17 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify", "@apollo/client", "ts-invariant/process"],
   },
-  buildModules: [
-    '@pinia/nuxt',
-  ],
+  buildModules: ["@pinia/nuxt"],
   typescript: {
     tsConfig: {
-      compliterOptions:{
-        types: [
-          'types'
-        ]
-      }
-    }
+      compliterOptions: {
+        types: ["types"],
+      },
+    },
   },
   typeCheck: {
-      eslint: {
-        files: './**/*.{ts,js,vue}'
-      }
-    }
+    eslint: {
+      files: "./**/*.{ts,js,vue}",
+    },
+  },
 });

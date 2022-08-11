@@ -1,0 +1,7 @@
+mutation CreateToDo($title: String!, $field: String!, $creator_id: ID!) {
+      createToDo(data: { title: $title, field: $field, creator: {set: $creator_id}}) {
+        id
+        title
+        field
+      }
+    }
