@@ -1,9 +1,11 @@
 overwrite: true
 schema: http://localhost:8000/graphql
+documents: 'gql/**/*.graphql'
 generates:
   ./client/schema.graphql:
-    - typescript
-    - typescript-operations
-    - typescript-vue-apollo-smart-ops
-    - typescript-vue-urql
+    plugins:
+      - typescript
+      - typescript-operations
+#      - typescript-vue-apollo-smart-ops
+#      - typescript-vue-urql
 

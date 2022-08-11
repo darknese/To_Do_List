@@ -1,0 +1,7 @@
+query Alltodo($id: ID!){
+  alltodo(filters: {creator: {id: {inList: [$id]}}}){
+    id
+    title
+    field
+  }
+}

@@ -19,5 +19,19 @@ export default defineNuxtConfig({
   },
   buildModules: [
     '@pinia/nuxt',
-  ]
+  ],
+  typescript: {
+    tsConfig: {
+      compliterOptions:{
+        types: [
+          'types'
+        ]
+      }
+    }
+  },
+  typeCheck: {
+      eslint: {
+        files: './**/*.{ts,js,vue}'
+      }
+    }
 });

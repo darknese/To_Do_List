@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { ref } from "#imports";
-import gql from "graphql-tag";
 import { useMutation } from "@vue/apollo-composable";
-import {hasProtocol} from "ufo";
-import {useRoute, useRouter} from "#app";
+import {useRouter} from "#app";
 import {useUserStore} from "~/stores/userstore";
+import Login from "../gql/users/login.graphql"
+import gql from "graphql-tag";
 
 const username = ref<string>("");
 const password = ref<string>("");
@@ -12,19 +12,20 @@ const email = ref<string>("");
 const n = ref<boolean>(false)
 const router = useRouter()
 
-const { mutate: login } = useMutation(gql`
-  mutation login($username: String!, $password: String!) {
+const log = gql`
+  mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       username
       id
     }
-  }
-`);
+  }`
+
+
+const { mutate: login } = useMutation(Login)
 
 
 const logining =  async () => {
   const user = await login({ username: username.value, password: password.value });
-  // console.log(user.data.login)
   if (user.data.login == null){
     n.value=true
   }
