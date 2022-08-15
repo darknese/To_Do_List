@@ -7,7 +7,11 @@ import { useUserStore } from "~/stores/userstore";
 import Alltodo from "~/gql/todo/queries/alltodo.graphql";
 import DeleteToDo from "~/gql/todo/mutations/delete.graphql";
 
+const router = useRouter();
 const store = useUserStore();
+if (!store.name) {
+  router.push("/login");
+}
 
 const { result: todosData } = useQuery(Alltodo, { id: store.id });
 const todos = computed(() => todosData.value?.alltodo ?? []);
